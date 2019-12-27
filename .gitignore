@@ -1,0 +1,4 @@
+node_modules
+files/csv/*
+files/features/*
+result_*
