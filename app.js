@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const projectUID = "g33ilF8u7e";
+const projectUID = "yj9RAWN9v2";
 
 const { csvToJson } = require("./helpers/index");
 const result_path = `result_${projectUID}.json`;
@@ -16,7 +16,8 @@ function parseObject(object) {
   for (const obj of object) {
     jsonObj[obj.issueUID] = {
       raw_images: obj["raw_images"],
-      folder_name: obj["folder_name"]
+      folder_name: obj["folder_name"],
+      markers: obj["markers"]
     };
   }
   return jsonObj;
