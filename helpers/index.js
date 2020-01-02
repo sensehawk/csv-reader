@@ -4,7 +4,8 @@ const mapProps = (props) => {
   return {
     issueUID: props.issueUID,
     raw_images: props["raw images"],
-    folder_name: props["projectName"]
+    folder_name: props["projectName"],
+    markers: props["markers"]
   }
 }
 
@@ -18,13 +19,13 @@ const generateRawImages = (projectUID, images, imgExt = "jpg") => {
   let rawImagesArr = [];
   for (image of imagesArr)
     rawImagesArr.push({
-      location: [0, 0],
+      location: images["markers"] ? images["markers"].split(",") : [0,0],
       service: {
         name: "aws_s3",
         region: "ap-south-1",
         bucket: "sensehawk-mumbai",
         stage: "unity_core",
-        key: `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image}.${imgExt}`
+        key: images["folder_name"] ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image}.${imgExt}` : `hawkai/${projectUID}/raw_images/${image}.${imgExt}`
       }
     });
   return rawImagesArr;
