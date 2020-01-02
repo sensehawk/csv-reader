@@ -1,2 +1,4 @@
 node_modules
 result_*
+files/csv/*
+files/features/*
