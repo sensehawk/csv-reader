@@ -1,9 +1,10 @@
 const csvtojson = require("csvtojson");
 
 const mapProps = (props) => {
+  let raw_images = props["raw images"] || props["raw_images"];
   return {
     issueUID: props.issueUID,
-    raw_images: props["raw images"],
+    raw_images,
     folder_name: props["projectName"],
     markers: props["markers"]
   }
