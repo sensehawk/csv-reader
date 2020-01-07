@@ -19,6 +19,9 @@ const generateRawImages = (projectUID, images, imgExt = "jpg") => {
   let imagesArr = images["raw_images"].split(",");
   let rawImagesArr = [];
   for (image of imagesArr)
+    {
+      image = image.split(".");
+      image.length > 1 && image.pop();
     rawImagesArr.push({
       location: images["markers"] ? images["markers"].split(",") : [0,0],
       service: {
@@ -26,9 +29,9 @@ const generateRawImages = (projectUID, images, imgExt = "jpg") => {
         region: "ap-south-1",
         bucket: "sensehawk-mumbai",
         stage: "unity_core",
-        key: images["folder_name"] ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image.includes(".jpg") ? image : image.imgExt}` : `hawkai/${projectUID}/raw_images/${image.includes(".jpg") ? image : image.imgExt}`
+        key: images["folder_name"] ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image}.${imgExt}` : `hawkai/${projectUID}/raw_images/${image}.${imgExt}`
       }
-    });
+    });}
   return rawImagesArr;
 };
 
