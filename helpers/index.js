@@ -26,7 +26,7 @@ const generateRawImages = (projectUID, images, imgExt = "jpg") => {
         region: "ap-south-1",
         bucket: "sensehawk-mumbai",
         stage: "unity_core",
-        key: images["folder_name"] ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image}.${imgExt}` : `hawkai/${projectUID}/raw_images/${image}.${imgExt}`
+        key: images["folder_name"] ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image.includes(".jpg") ? image : image.imgExt}` : `hawkai/${projectUID}/raw_images/${image.includes(".jpg") ? image : image.imgExt}`
       }
     });
   return rawImagesArr;
