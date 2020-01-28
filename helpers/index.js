@@ -16,22 +16,22 @@ const csvToJson = async filePath => {
 };
 
 const generateRawImages = (projectUID, images, imgExt = "jpg") => {
-  let imagesArr = images["raw_images"].split(",");
-  let markersArr = images["markers"].split(";");
+  console.log(images["raw_images"])
+  let imagesArr = images["raw_images"] ? images["raw_images"].split(",") : [];
+  let markersArr = images["markers"] ? images["markers"].split(";") : new Array(imagesArr.length).fill([0,0]);
   let rawImagesArr = [];
-  for (i=0; i<imagesArr.length; i++) {
-    image = imagesArr[i].split(".");
-    imagesArr[i].length > 1 && imagesArr[i].pop();
   
+  for (i=0; i<imagesArr.length; i++) {
+    let image = imagesArr[i].includes(".") ? imagesArr[i] : `${imagesArr[i]}.${imgExt}`;
     rawImagesArr.push({
-      location: markersArr.length ? markersArr[i].split(",") : [0, 0],
+      location: markersArr.length ? markersArr[i] : [0, 0],
       service: {
         name: "aws_s3",
         region: "ap-south-1",
         bucket: "sensehawk-mumbai",
         stage: "unity_core",
         key: images["folder_name"]
-          ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${imagesArr[i]}.${imgExt}`
+          ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image}`
           : `hawkai/${projectUID}/raw_images/${image}.${imgExt}`
       }
     });
