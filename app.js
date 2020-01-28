@@ -3,6 +3,9 @@ const fs = require("fs");
 const [, , ...argsList] = process.argv; // short hand for -> const argsList = process.argv.slice(2);
 const projectUID = argsList[0];
 
+const { promisify } = require("util");
+const readFile = promisify(fs.readFile);
+
 const helpMenu = () => 'command "./app.js [projectUID]"';
 // const pUid = "DankFXAj0a";
 if(!projectUID) {
@@ -15,11 +18,11 @@ const { csvToJson } = require("./helpers/index");
 const result_path = `result_${projectUID}.json`;
 
 const csvPath = `./files/csv/${projectUID}.csv`;
-const jsonPath = `./files/features/${projectUID}.js`;
-
-const features = require(jsonPath);
+const jsonPath = `./files/features/${projectUID}.json`;
 const { generateRawImages } = require("./helpers/index");
 
+
+const getFeatures = async(path) => JSON.parse(await readFile(path));
 
 function parseObject(object) {
   let jsonObj = {};
@@ -34,13 +37,14 @@ function parseObject(object) {
 }
 
 csvToJson(csvPath)
-  .then(jA => {
+  .then(async jA => {
+    const features = await getFeatures(jsonPath);
     let jsonObj = parseObject(jA);
     for (let feature of features.features) {
       if (jsonObj[feature.properties.uid])
         feature.properties["raw_images"] = generateRawImages(feature.properties.projectUid, jsonObj[feature.properties.uid], "jpg");
     }
     fs.appendFileSync(result_path, JSON.stringify(features), { flag: "w+" });
-    console.log(`data written to ${result_path}`)
+    console.log(`data written to ${result_path}`);
   })
   .catch(console.log);
