@@ -1,15 +1,25 @@
+#!/usr/bin/env node
 const fs = require("fs");
+const [, , ...argsList] = process.argv; // short hand for -> const argsList = process.argv.slice(2);
+const projectUID = argsList[0];
 
-const projectUID = "yj9RAWN9v2";
+const helpMenu = () => 'command "./app.js [projectUID]"';
+// const pUid = "DankFXAj0a";
+if(!projectUID) {
+  console.log("Please provide projectUID!");
+  console.log(helpMenu());
+  process.exit();
+}
 
 const { csvToJson } = require("./helpers/index");
 const result_path = `result_${projectUID}.json`;
 
-const csvPath = `/home/dibyajyoti/Desktop/csv-reader/files/csv/${projectUID}.csv`;
+const csvPath = `./files/csv/${projectUID}.csv`;
 const jsonPath = `./files/features/${projectUID}.js`;
 
 const features = require(jsonPath);
 const { generateRawImages } = require("./helpers/index");
+
 
 function parseObject(object) {
   let jsonObj = {};
@@ -31,5 +41,6 @@ csvToJson(csvPath)
         feature.properties["raw_images"] = generateRawImages(feature.properties.projectUid, jsonObj[feature.properties.uid], "jpg");
     }
     fs.appendFileSync(result_path, JSON.stringify(features), { flag: "w+" });
+    console.log(`data written to ${result_path}`)
   })
-  .catch(ex => console.log(ex));
+  .catch(console.log);
