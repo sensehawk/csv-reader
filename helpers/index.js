@@ -33,7 +33,7 @@ const generateRawImages = (projectUID, images, imgExt = "jpg") => {
         stage: "unity_core",
         key: images["folder_name"]
           ? `hawkai/${projectUID}/raw_images/${images["folder_name"]}/${image}`
-          : `hawkai/${projectUID}/raw_images/${image}.${imgExt}`
+          : `hawkai/${projectUID}/raw_images/${image}`
       }
     });
   }
