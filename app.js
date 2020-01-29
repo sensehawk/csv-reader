@@ -19,8 +19,8 @@ if(!projectUID) {
 const { csvToJson } = require("./helpers/index");
 const result_path = `result_${projectUID}.json`;
 
-const csvPath = platform === "win32" ? `.\files\csv\${projectUID}.csv` : `./files/csv/${projectUID}.csv`;
-const jsonPath = platform === "win32" ? `.\files\features\${projectUID}.json`: `./files/features/${projectUID}.json`;
+const csvPath = platform === "win32" ? `${__dirname}\\files\\csv\\${projectUID}.csv` : `./files/csv/${projectUID}.csv`;
+const jsonPath = platform === "win32" ? `${__dirname}\\files\\features\\${projectUID}.json`: `./files/features/${projectUID}.json`;
 const { generateRawImages } = require("./helpers/index");
 
 
