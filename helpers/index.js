@@ -18,7 +18,6 @@ const csvToJson = async filePath => {
 };
 
 const generateRawImages = (projectUID, images, imgExt = "jpg") => {
-  console.log(images["raw_images"])
   let imagesArr = images["raw_images"] ? images["raw_images"].split(",") : [];
   let markersArr = images["markers"] ? images["markers"].split(";") : new Array(imagesArr.length).fill([0,0]);
   let rawImagesArr = [];
