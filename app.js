@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const [, , ...argsList] = process.argv; // short hand for -> const argsList = process.argv.slice(2);
+const { platform } = require("process");
 let projectUID = argsList[0];
 
 const { promisify } = require("util");
@@ -18,8 +19,8 @@ if(!projectUID) {
 const { csvToJson } = require("./helpers/index");
 const result_path = `result_${projectUID}.json`;
 
-const csvPath = `./files/csv/${projectUID}.csv`;
-const jsonPath = `./files/features/${projectUID}.json`;
+const csvPath = platform === "win32" ? `.\files\csv\${projectUID}.csv` : `./files/csv/${projectUID}.csv`;
+const jsonPath = platform === "win32" ? `.\files\features\${projectUID}.json`: `./files/features/${projectUID}.json`;
 const { generateRawImages } = require("./helpers/index");
 
 
