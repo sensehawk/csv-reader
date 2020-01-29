@@ -6,7 +6,9 @@ const mapProps = props => {
     issueUID: props.issueUID,
     raw_images,
     folder_name: props["projectName"],
-    markers: props["markers"]
+    markers: props["markers"],
+    temp: props["temp"],
+    timestamp: props["timestamp"]
   };
 };
 
