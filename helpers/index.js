@@ -25,7 +25,7 @@ const generateRawImages = (projectUID, images, imgExt = "jpg") => {
   for (i=0; i<imagesArr.length; i++) {
     let image = imagesArr[i].includes(".") ? imagesArr[i] : `${imagesArr[i]}.${imgExt}`;
     rawImagesArr.push({
-      location: markersArr.length ? markersArr[i].split(",") : [0, 0],
+      location: markersArr.length ? Array.isArray(markersArr[i]) ? markersArr[i] : markersArr[i].split(",") : [0, 0],
       service: {
         name: "aws_s3",
         region: "ap-south-1",
